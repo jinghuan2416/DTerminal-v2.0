@@ -26,7 +26,8 @@ namespace DTerminal
         public RelayCommand<NavMenuItem> OpenCommand { get; set; }
         public NavMenuItem? SelectNavMenuItem
         {
-            get => selectNavMenuItem; set
+            get => selectNavMenuItem; 
+            set
             {
                 if (this.SetProperty(ref selectNavMenuItem, value) && value is NavMenuItem item)
                 {
