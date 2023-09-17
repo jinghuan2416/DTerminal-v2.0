@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="DTerminal.Views.OptistructFrequencyResponseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTerminal.Views"
+             xmlns:vm="clr-namespace:DTerminal.ViewModels"
+             xmlns:m="clr-namespace:DTerminal.Models"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:oxy="http://oxyplot.org/wpf"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=vm:OptistructFrequencyResponseViewModel}">
+    <TabControl>
+        <TabItem Header="动刚度前处理" DataContext="{Binding DynamicStiffnessViewModel}">
+            <StackPanel Margin="10">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="节点总数*" Foreground="Red"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="开始频率"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="目标频率*" Foreground="Red"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="全局阻尼"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="扫频步长"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="FRQE3NEF"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="FRQE3CLUSTER"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.NodeCount}" Foreground="Red"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.StarFrequency}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.TargetFrequency}" Foreground="Red"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.ParamG}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.NumberofFrequencySweeps}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.FRQE3NEF}"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.FRQE3CLUSTER}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="开始节点编号"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Tabled1卡片编号"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="EIGRL卡片编号"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="EFREQ卡片编号"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="SET卡片起始编号"/>
+                    <TextBlock Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="RLOAD卡片起始编号"/>
+                    <TextBlock Grid.Row="6" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="DAREA卡片起始编号"/>
+                    <TextBlock Grid.Row="7" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="工况卡片起始编号"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.StarNode}"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.Tabled1ID}"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.EigrlID}"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.FreqID}"/>
+                    <TextBox Grid.Row="4" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.SetGridID}"/>
+                    <TextBox Grid.Row="5" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.RloadID}"/>
+                    <TextBox Grid.Row="6" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.DareaID}"/>
+                    <TextBox Grid.Row="7" Grid.Column="3" Margin="5" HorizontalContentAlignment="Center" Text="{Binding FrequencyResponseParameter.SubcaseID}"/>
+                </Grid>
+                <CheckBox Margin="5" Content="是否组合工况" IsChecked="{Binding FrequencyResponseParameter.IsCombineLoad}"/>
+                <Button Margin="5" Content="生成模板" Command="{Binding GenerateTemplateCommand}"/>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="动刚度后处理" DataContext="{Binding PunchPlotViewModel}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="AUTO"/>
+                </Grid.RowDefinitions>
+                <DockPanel>
+                    <Button Margin="5" Content="选择文件" Command="{Binding ReadFileCommand}"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Margin="5"
+                              ItemsSource="{Binding PunchDrawParameters}" 
+                              SelectedItem="{Binding SelectPunchDrawParameter}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type m:PunchDrawParameter}">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="工况：{0} - 类型：{1}" >
+                                            <Binding Path="FrequencyResponsePunch.Label"/>
+                                            <Binding Path="FrequencyResponsePunch.ResultType"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="250"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="AUTO"/>
+                        </Grid.RowDefinitions>
+                        <oxy:PlotView Model="{Binding SelectPunchDrawParameter.PlotModel}" Grid.Column="0"/>
+                    </Grid>
+                    <ScrollViewer Grid.Column="1">
+                        <StackPanel >
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </StackPanel>
+                            <GroupBox Header="绘图参数" Margin="5">
+                                <StackPanel>
+                                    <DockPanel>
+                                        <TextBlock Margin="5" Text="字体大小" VerticalAlignment="Center"/>
+                                        <TextBox Margin="5" Text="{Binding SelectPunchDrawParameter.FontSize}"/>
+                                    </DockPanel>
+                                    <CheckBox Margin="5" Content="对数坐标 - Y" IsChecked="{Binding SelectPunchDrawParameter.IsYLogarithmic}"/>
+                                    <CheckBox Margin="5" Content="动刚度" IsChecked="{Binding SelectPunchDrawParameter.IsDynamicStiffness}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="5" Content="X" IsChecked="{Binding SelectPunchDrawParameter.IsShowX}"/>
+                                        <CheckBox Margin="5" Content="Y" IsChecked="{Binding SelectPunchDrawParameter.IsShowY}"/>
+                                        <CheckBox Margin="5" Content="Z" IsChecked="{Binding SelectPunchDrawParameter.IsShowZ}"/>
+                                    </StackPanel>
+                                    <DockPanel>
+                                        <CheckBox Margin="5" Content="标准线" IsChecked="{Binding SelectPunchDrawParameter.IsShowStander}"/>
+                                        <TextBox Margin="5" Text="{Binding SelectPunchDrawParameter.StanderVlaue}" IsEnabled="{Binding SelectPunchDrawParameter.IsShowStander}"/>
+                                    </DockPanel>
+                                    <DockPanel>
+                                        <CheckBox Margin="5" Content="最小标记" IsChecked="{Binding SelectPunchDrawParameter.IsMarkMin}"/>
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox VerticalAlignment="Center" materialDesign:HintAssist.Hint="Min X" Margin="5" HorizontalContentAlignment="Center"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding SelectPunchDrawParameter.MarkMinValue}"/>
+                                            <TextBox VerticalAlignment="Center" materialDesign:HintAssist.Hint="Max X" Margin="5" Grid.Column="1" HorizontalContentAlignment="Center"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding SelectPunchDrawParameter.MarkMaxValue}"/>
+                                        </Grid>
+                                    </DockPanel>
+                                    <Button Margin="5" Content="刷新" Command="{Binding SelectPunchDrawParameter.InvalidatePlotCommand}"/>
+                                    <Button Margin="5" Content="同步" Command="{Binding SynchronizeCommand}"/>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Margin="5" Header="导出">
+                                <StackPanel>
+                                    <Button Margin="5" Content="导出图片" Command="{Binding SavePicCommand}"/>
+                                    <Button Margin="5" Content="导出图片（全部）" Command="{Binding SaveAllPicsCommand}"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox VerticalAlignment="Center" materialDesign:HintAssist.Hint="宽度" Margin="5" HorizontalContentAlignment="Center"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding PngWidth}"/>
+                                        <TextBlock VerticalAlignment="Center" Text="-" Margin="5" Grid.Column="1"/>
+                                        <TextBox VerticalAlignment="Center" materialDesign:HintAssist.Hint="高度" Margin="5"  Grid.Column="2" HorizontalContentAlignment="Center"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding PngHeight}"/>
+                                    </Grid>
+                                    <Button Margin="5" Content="导出数据" Command="{Binding SaveDataCommand}"/>
+                                    <Button Margin="5" Content="导出数据（全部）" Command="{Binding SaveAllDataCommand}"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+                <StatusBar Grid.Row="2">
+                    <StatusBarItem Content="已选择："/>
+                    <StatusBarItem Content="{Binding SelectPunchDrawParameter.TrackerHitResult.Series.Title}"/>
+                    <Separator/>
+                    <StatusBarItem Content="参数："/>
+                    <StatusBarItem Content="{Binding SelectPunchDrawParameter.TrackerHitResult.DataPoint}"/>
+                </StatusBar>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</UserControl>

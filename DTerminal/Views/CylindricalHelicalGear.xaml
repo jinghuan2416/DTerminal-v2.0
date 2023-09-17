@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="DTerminal.Views.CylindricalHelicalGear"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTerminal.Views"
+             xmlns:vm="clr-namespace:DTerminal.ViewModels"
+             mc:Ignorable="d" >
+    <UserControl.DataContext>
+        <vm:CylindricalHelicalGearViewModel/>
+    </UserControl.DataContext>
+    <WrapPanel>
+        <GroupBox Header="斜齿轮啮合力" Margin="5" Width="300">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="5" Grid.Row="0" Text="扭矩[N mm-1]"/>
+                    <TextBlock Margin="5" Grid.Row="1" Text="分度圆直径[mm]"/>
+                    <TextBlock Margin="5" Grid.Row="2" Text="压力角[°]"/>
+                    <TextBlock Margin="5" Grid.Row="3" Text="螺旋角[°]"/>
+                    <Button Margin="5" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding ComputeCommand}"  Content="计算"/>
+                    <TextBlock Margin="5" Grid.Row="5" Text="径向力[N]"/>
+                    <TextBlock Margin="5" Grid.Row="6" Text="切向力[N]"/>
+                    <TextBlock Margin="5" Grid.Row="7" Text="轴向力[N]"/>
+                    <TextBlock Margin="5" Grid.Row="8" Text="法向力[N]"/>
+                    <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Torsion}"/>
+                    <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding CylindricalHelicalGear.DividingCircle}"/>
+                    <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding CylindricalHelicalGear.PressureAngle}"/>
+                    <TextBox Margin="5" Grid.Row="3" Grid.Column="1" Text="{Binding CylindricalHelicalGear.HelixAngle}"/>
+                    <TextBox Margin="5" Grid.Row="5" Grid.Column="1" IsReadOnly="True" Text="{Binding MeshingForce.Radial}"/>
+                    <TextBox Margin="5" Grid.Row="6" Grid.Column="1" IsReadOnly="True" Text="{Binding MeshingForce.Tangential}"/>
+                    <TextBox Margin="5" Grid.Row="7" Grid.Column="1" IsReadOnly="True" Text="{Binding MeshingForce.Axial}"/>
+                    <TextBox Margin="5" Grid.Row="8" Grid.Column="1" IsReadOnly="True" Text="{Binding MeshingForce.Normal}"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+    </WrapPanel>
+</UserControl>

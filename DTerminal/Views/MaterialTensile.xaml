@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="DTerminal.Views.MaterialTensile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTerminal.Views" xmlns:oxy="http://oxyplot.org/wpf"
+             mc:Ignorable="d" 
+             xmlns:vm="clr-namespace:DTerminal.ViewModels">
+    <UserControl.DataContext>
+        <vm:MaterialTensileViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="AUTO" Grid.Column="1">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="位移缩放系数" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Text="力缩放系数" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding DisplacementScale,UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding ForceScale,UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <CheckBox IsChecked="{Binding IsAverage}" Content="平均相同位移的力" Margin="5"/>
+                <Button Content="读取文件" Command="{Binding ReadDispForceFromClipboardCommand}" Margin="5"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="直径 mm" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Text="标距长度 mm" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Diameter}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding GaugeLength}"/>
+                </Grid>                
+                <Button Content="生成应力应变" Command="{Binding ConvertToSSCommand}" Margin="5"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="弹性模量" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Text="截断应变" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding ElasticModulus}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding TruncationStrain}"/>
+                </Grid>
+                <Button Content="去除弹性应变" Command="{Binding ConvertToPlasticCommand}" Margin="5"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="N" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Text="H" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Text="残差" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Text="最大迭代" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Text="最大应力" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Ro_N}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Ro_H}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Tolerance}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding MaxIterations}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Margin="5" Text="{Binding MaxStress}"/>
+                </Grid>
+                <Button Content="RO拟合" Command="{Binding RambergOsgoodFittingCommand}" Margin="5"/>
+            </StackPanel>
+        </ScrollViewer>
+        <TabControl Grid.Column="0">
+            <TabItem Header="数据">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid ItemsSource="{Binding TensileDataCollection}" IsReadOnly="True" AutoGenerateColumns="False" Margin="5" Grid.Column="0" Background="{x:Null}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="位移" Binding="{Binding Displacement}"/>
+                            <DataGridTextColumn Header="力" Binding="{Binding Force}"/>
+                            <DataGridTextColumn Header="工程应变" Binding="{Binding EngineeringStrain}"/>
+                            <DataGridTextColumn Header="工程应力" Binding="{Binding EngineeringStress}"/>
+                            <DataGridTextColumn Header="真实应变" Binding="{Binding TrueStrain}"/>
+                            <DataGridTextColumn Header="真实应力" Binding="{Binding TrueStress}"/>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="粘贴（位移-力）" Command="{Binding PasteDispForceFromClipboardCommand}"/>
+                                <MenuItem Header="复制数据" Command="{Binding CopyTensileDatatoClipboardCommand}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                    <DataGrid ItemsSource="{Binding TruePlasticCollection}" IsReadOnly="True" AutoGenerateColumns="False" Margin="5" Grid.Column="2" Background="{x:Null}">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="复制数据" Command="{Binding CopyTruePlastictoClipboardCommand}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="真实塑性应变" Binding="{Binding Strain}"/>
+                            <DataGridTextColumn Header="真实应力" Binding="{Binding Stress}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid ItemsSource="{Binding RambergOsgoodStrainStress}" IsReadOnly="True" AutoGenerateColumns="False" Margin="5" Grid.Column="4" Background="{x:Null}">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="复制数据" Command="{Binding CopyRambergOsgoodStrainStressToClipboardCommand}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="RO_真实应变" Binding="{Binding Strain}"/>
+                            <DataGridTextColumn Header="RO_真实应力" Binding="{Binding Stress}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid ItemsSource="{Binding RambergOsgoodPlasticStrainStress}" IsReadOnly="True" AutoGenerateColumns="False" Margin="5" Grid.Column="6" Background="{x:Null}">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="复制数据" Command="{Binding CopyRambergOsgoodPlasticStrainStressToClipboardCommand}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="RO_真实塑性应变" Binding="{Binding Strain}"/>
+                            <DataGridTextColumn Header="RO_真实应力" Binding="{Binding Stress}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+                    <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+                    <GridSplitter Grid.Column="5" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="绘图">
+                <oxy:PlotView Model="{Binding PlotModel}" Background="{DynamicResource MaterialDesignPaper}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="DTerminal.Views.HarmonicWave"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTerminal.Views" xmlns:oxy="http://oxyplot.org/wpf" xmlns:viewmodels="clr-namespace:DTerminal.ViewModels"
+             mc:Ignorable="d" >
+    <UserControl.DataContext>
+        <viewmodels:HarmonicWaveViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DataGrid ItemsSource="{Binding HarmonicParameters}"  
+                      IsReadOnly="False"
+                      SelectedItem="{Binding SelectedHarmonicParameter}" 
+                      CanUserAddRows="False" 
+                      CanUserDeleteRows="False" 
+                      Grid.Row="0">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="添加" Command="{Binding AddItemCommand}"/>
+                        <MenuItem Header="删除" Command="{Binding RemoveItemCommand}"/>
+                        <MenuItem Header="清空" Command="{Binding ClearItemsCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="幅值" Binding="{Binding Amplitude}" />
+                    <DataGridTextColumn Header="频率" Binding="{Binding Frequency}" />
+                    <DataGridTextColumn Header="相位" Binding="{Binding Phase}" />
+                    <DataGridTextColumn Header="偏移" Binding="{Binding Offset}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Row="1">
+                <DockPanel>
+                    <TextBlock Margin="5" Text="开始"/>
+                    <TextBox Margin="5" Text="{Binding Star}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Margin="5" Text="结束"/>
+                    <TextBox Margin="5" Text="{Binding End}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Margin="5" Text="步长"/>
+                    <TextBox Margin="5" Text="{Binding Step}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Margin="5" Text="容差"/>
+                    <TextBox Margin="5" Text="{Binding Tolerance}"/>
+                </DockPanel>
+                <Button Content="生成" Margin="5" Command="{Binding GenerateCommand}"/>
+
+            </StackPanel>
+        </Grid>
+        <TabControl Grid.Column="0">
+            <TabItem Header="数据">
+                <DataGrid ItemsSource="{Binding HarmonicPoints}" AutoGenerateColumns="False">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="复制" Command="{Binding CopyDataToClipboardCommand}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="X" Binding="{Binding X}"/>
+                        <DataGridTextColumn Header="Y" Binding="{Binding Y}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="绘图">
+                <oxy:PlotView Model="{Binding PlotModel}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

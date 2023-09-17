@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="DTerminal.Views.ReducerBearingLoad"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTerminal.Views" 
+             xmlns:viewmodels="clr-namespace:DTerminal.ViewModels"
+             mc:Ignorable="d" >
+    <UserControl.DataContext>
+        <viewmodels:ReducerBearingLoadViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer  VerticalScrollBarVisibility="Auto" Grid.Column="1">
+            <StackPanel >
+                <Button Content="读取载荷谱"  Margin="5" Command="{Binding ReadHtmlCommand}"/>
+                <TextBlock Margin="5" Text="节点编号参考" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="1"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="2"/>
+                    <TextBlock Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="3"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="4"/>
+                    <TextBlock Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="5"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="6"/>
+                    <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="11"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="12"/>
+                    <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="13"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="14"/>
+                    <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="15"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="16"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="input"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="middle"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="diff"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="Trans" Grid.ColumnSpan="2"/>
+                    <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="Motor" Grid.ColumnSpan="2"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="0" Text="line 1"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="1" Text="line 2"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="2" Text="line 3"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="3" Text="line 4"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="4" Text="line 5"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="5" Text="line 6"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="6" Text="力缩放系数"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5" Grid.Row="7" Text="力矩缩放系数"/>
+                    <ComboBox Margin="5" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LoadAreas}" SelectedIndex="{Binding SelectedLoadAreaIndex1}"/>
+                    <ComboBox Margin="5" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding LoadAreas}" SelectedIndex="{Binding SelectedLoadAreaIndex2}"/>
+                    <ComboBox Margin="5" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding LoadAreas}" SelectedIndex="{Binding SelectedLoadAreaIndex3}"/>
+                    <ComboBox Margin="5" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding LoadAreas}" SelectedIndex="{Binding SelectedLoadAreaIndex4}"/>
+                    <ComboBox Margin="5" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding LoadAreas}" SelectedIndex="{Binding SelectedLoadAreaIndex5}"/>
+                    <ComboBox Margin="5" Grid.Row="5" Grid.Column="1" ItemsSource="{Binding LoadAreas}" SelectedIndex="{Binding SelectedLoadAreaIndex6}"/>
+                    <TextBox Margin="5" Grid.Row="6" Grid.Column="1" Text="{Binding ScaleF}" />
+                    <TextBox Margin="5" Grid.Row="7" Grid.Column="1" Text="{Binding ScaleM}" />
+                </Grid>
+                <Button Content="输出" Margin="5" Command="{Binding ExportCommand}"/>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid IsReadOnly="True" CanUserSortColumns="False" Background="{x:Null}" Margin="5" CanUserReorderColumns="False"
+                              AutoGenerateColumns="False" ItemsSource="{Binding BearingLoadModels}" SelectedItem="{Binding SelectLoadModel}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEnable}" Value="false">
+                                <Setter Property="Foreground" Value="#D3D3D3"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="CaseName" Binding="{Binding CaseName}"/>
+                    <DataGridTextColumn Header="Fx" Binding="{Binding Fx}"/>
+                    <DataGridTextColumn Header="Fy" Binding="{Binding Fy}"/>
+                    <DataGridTextColumn Header="Fz" Binding="{Binding Fz}"/>
+                    <DataGridTextColumn Header="Mx" Binding="{Binding Mx}"/>
+                    <DataGridTextColumn Header="My" Binding="{Binding My}"/>
+                    <DataGridTextColumn Header="Mz" Binding="{Binding Mz}"/>
+                    <DataGridTextColumn Header="Note" Binding="{Binding Note}"/>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu Background="White">
+                        <MenuItem Header="读取载荷谱(html)" Command="{Binding ReadHtmlCommand}"/>
+                        <MenuItem Header="粘贴载荷谱" Command="{Binding PasteFromClipboardCommand}"/>
+                        <Separator/>
+                        <MenuItem Header="禁用/启用" Command="{Binding ChangeEnableCommand}"/>
+                        <MenuItem Header="移除" Command="{Binding RemoveCommand}"/>
+                        <MenuItem Header="移除当前行" Command="{Binding RemoveCurrentCommand}"/>
+                        <MenuItem Header="复制" Command="{Binding CopyToClipboardCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>
