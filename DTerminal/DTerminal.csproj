@@ -7,10 +7,15 @@
     <UseWPF>true</UseWPF>
     <AssemblyVersion>1.0.0.2</AssemblyVersion>
     <FileVersion>1.0.0.2</FileVersion>
+    <ApplicationIcon>ico.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Fonts\HarmonyOS_Sans_SC_Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ico.ico" />
   </ItemGroup>
 
   <ItemGroup>
