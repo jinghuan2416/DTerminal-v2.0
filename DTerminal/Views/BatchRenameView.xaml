@@ -1,0 +1,172 @@
+﻿<UserControl x:Class="DTerminal.Views.BatchRenameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DTerminal.Views"
+             xmlns:vm="clr-namespace:DTerminal.ViewModels"
+             xmlns:rename="clr-namespace:DTerminal.Core.Util.Rename;assembly=DTerminal.Core" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"  d:DataContext="{d:DesignInstance Type=vm:BatchRenameViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <ListView ItemsSource="{Binding FileInfos}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="选择文件" Command="{Binding ChooseFilesCommand}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding FileName}" Header="原文件名" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding NewName}" Header="新文件名" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Button Content="检索" Command="{Binding AddOperationCommand}" CommandParameter="{x:Static rename:OperationType.Substring}" Margin="5"/>
+                <Button Content="替换" Command="{Binding AddOperationCommand}" CommandParameter="{x:Static rename:OperationType.Replace}" Margin="5"/>
+                <Button Content="分割" Command="{Binding AddOperationCommand}" CommandParameter="{x:Static rename:OperationType.Split}" Margin="5"/>
+                <Button Content="移除" Command="{Binding AddOperationCommand}" CommandParameter="{x:Static rename:OperationType.Remove}" Margin="5"/>
+                <Button Content="添加" Command="{Binding AddOperationCommand}" CommandParameter="{x:Static rename:OperationType.Add}" Margin="5"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <ItemsControl ItemsSource="{Binding Operations}">
+                    <ItemsControl.Resources>
+                        <Style TargetType="CheckBox">
+                            <Style.Setters>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style.Setters>
+                        </Style>
+                        <Style TargetType="Label">
+                            <Style.Setters>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style.Setters>
+                        </Style>
+                        <DataTemplate DataType="{x:Type rename:SubstringOperation}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="检索：" Margin="5"/>
+                                    <CheckBox Content="是否启用" IsChecked="{Binding IsEnable}" Margin="5"/>
+                                    <Button Margin="5" Style="{StaticResource MaterialDesignIconButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=local:BatchRenameView},Path=DataContext.RemoveOperationCommand}" 
+                                        CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="CloseBoxOutline" />
+                                    </Button>
+                                </StackPanel>
+                                <DockPanel>
+                                    <Label Content="开始位置" Margin="5"/>
+                                    <TextBox  Text="{Binding Star}" Margin="5"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="提取长度" Margin="5"/>
+                                    <TextBox  Text="{Binding Length}" Margin="5"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type rename:SplitOperation}">
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="分割：" Margin="5"/>
+                                    <CheckBox Content="是否启用" IsChecked="{Binding IsEnable}" Margin="5"/>
+                                    <Button Margin="5" Style="{StaticResource MaterialDesignIconButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=local:BatchRenameView},Path=DataContext.RemoveOperationCommand}" 
+                                        CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="CloseBoxOutline" />
+                                    </Button>
+                                </StackPanel>
+                                <DockPanel>
+                                    <Label Content="分隔符" Margin="5"/>
+                                    <TextBox  Text="{Binding Separator}" Margin="5"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="目标" Margin="5"/>
+                                    <TextBox  Text="{Binding Target}" Margin="5"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type rename:RemoveOperation}">
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="移除：" Margin="5"/>
+                                    <CheckBox Content="是否启用" IsChecked="{Binding IsEnable}" Margin="5"/>
+                                    <Button Margin="5" Style="{StaticResource MaterialDesignIconButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=local:BatchRenameView},Path=DataContext.RemoveOperationCommand}" 
+                                        CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="CloseBoxOutline" />
+                                    </Button>
+                                </StackPanel>
+                                <DockPanel>
+                                    <Label Content="开始位置" Margin="5"/>
+                                    <TextBox  Text="{Binding Star}" Margin="5"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="移除长度" Margin="5"/>
+                                    <TextBox  Text="{Binding Length}" Margin="5"/>
+                                </DockPanel>
+
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type rename:ReplaceOperation}">
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="替换：" Margin="5"/>
+                                    <CheckBox Content="是否启用" IsChecked="{Binding IsEnable}" Margin="5"/>
+                                    <Button Margin="5" Style="{StaticResource MaterialDesignIconButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=local:BatchRenameView},Path=DataContext.RemoveOperationCommand}" 
+                                        CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="CloseBoxOutline" />
+                                    </Button>
+                                </StackPanel>
+                                <DockPanel>
+                                    <Label Content="原始字符" Margin="5"/>
+                                    <TextBox  Text="{Binding OldValue}" Margin="5"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="替换字符" Margin="5"/>
+                                    <TextBox  Text="{Binding NewValue}" Margin="5"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type rename:AddOperation}">
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="添加：" Margin="5"/>
+                                    <CheckBox Content="是否启用" IsChecked="{Binding IsEnable}" Margin="5"/>
+                                    <Button Margin="5" Style="{StaticResource MaterialDesignIconButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=local:BatchRenameView},Path=DataContext.RemoveOperationCommand}" 
+                                        CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="CloseBoxOutline" />
+                                    </Button>
+                                </StackPanel>
+                                <DockPanel>
+                                    <Label Content="添加字符" Margin="5"/>
+                                    <TextBox  Text="{Binding Content}" Margin="5"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <Label Content="开始位置" Margin="5"/>
+                                    <TextBox Text="{Binding Star}" Margin="5"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Row="3" >
+                <Button Command="{Binding ReviewCommand}" Margin="5">预览</Button>
+                <Button Command="{Binding RenameCommand}" Margin="5">重命名</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
